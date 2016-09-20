@@ -8,6 +8,7 @@ RUN apt-get install -y python && apt-get  install -y  python-pip && apt-get inst
 
 #copy the contents from project repository to virtual directory
 COPY / /var/www/blog/
+WORKDIR /var/www/blog/
 
 RUN pip install -r requirements.txt
 RUN python manage.py makemigrations
@@ -26,8 +27,6 @@ ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
 RUN apache2 -t -D DUMP_MODULES
-
-WORKDIR /var/www/blog/
 
 #run apache2 at foreground
 RUN service apache2 restart 
